@@ -6,18 +6,64 @@
     <title>Document</title>
 </head>
 <body>
-    <form id="form">
-        <input type="text" id="input">
-        <button type="submit">Submit</button>
+    <form id="form" action="">
+        <Input type="text" id="itemInput" placeholder="Include items...">
+        <button type="submit">Insert</button>
     </form>
-
+    
     <ul id="list">
-    </ul>
+    </ul> 
 
     <script>
+        //Get the form id="form", 
+        // add an event from the submit button after be clicked and add function "event"
         document.getElementById('form').addEventListener('submit', function(event) {
+            //Function "event" to prevent the default action of the form
             event.preventDefault();
-            document.getElementById('list').innerHTML += '<li>' + document.getElementById('input').value + '</li>';
+            
+            //Create the variable "inputValue",
+            // this variable get the value in itemInput
+            // "trim" eraser the empty spaces
+            let inputValue = document.getElementById('itemInput').value.trim();
+            //add the conditional "if" to check if the inputValue is empty, 
+            // and if this is true the "return" crash the event
+            if (!inputValue) return;
+
+            //Create the variable "li", 
+            // this variable create a new element "li" 
+            let li = document.createElement('li');
+
+            //Create the variable "textInput", 
+            // this variable create a new element "input"
+            let textInput = document.createElement('input');
+            //Inform the type of the input
+            textInput.type = 'text';
+            //Get the value taked in the inputValue
+            textInput.value = inputValue;
+
+            //Create the variable "removeButton", 
+            // this variable create a new element "button"
+            let removeButton = document.createElement('button');
+            //Add the text "Remove" in the button
+            removeButton.textContent = 'Remove';
+            //Add the class "remove" in the button
+            removeButton.className = 'remove';
+
+            //Add the action when the "removeButton" is clicked
+            removeButton.addEventListener('click', function() {
+                //Remove the line when the button is clicked
+                li.remove();
+            });
+
+            //Add the "textInput" in the variable "li"
+            li.appendChild(textInput);
+            //Add the "removeButton" in the variable "li"
+            li.appendChild(removeButton);
+            //Add the variable "li" in the element "list"
+            document.getElementById('list').appendChild(li);
+
+            //Clean the input after the submit
+            document.getElementById('itemInput').value = '';
         });
     </script>
 </body>
